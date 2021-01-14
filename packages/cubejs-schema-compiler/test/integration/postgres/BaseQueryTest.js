@@ -1,16 +1,16 @@
 /* globals it, describe, after */
 /* eslint-disable quote-props */
-const moment = require('moment-timezone');
-const UserError = require('../../../compiler/UserError');
-const PostgresQuery = require('../../../adapter/PostgresQuery');
-const PrepareCompiler = require('../../unit/PrepareCompiler');
+import moment from 'moment-timezone';
+import { UserError } from '../../../src/compiler/UserError';
+import { PostgresQuery } from '../../../src/adapter/PostgresQuery';
+import { prepareCompiler } from '../../unit/PrepareCompiler';
+import { PostgresDBRunner } from './PostgresDBRunner';
+
 require('should');
-
-const { prepareCompiler } = PrepareCompiler;
-const dbRunner = require('./PostgresDBRunner');
-
 describe('SQL Generation', function test() {
   this.timeout(90000);
+
+  const dbRunner = new PostgresDBRunner();
 
   after(async () => {
     await dbRunner.tearDown();

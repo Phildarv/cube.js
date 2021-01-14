@@ -1,11 +1,11 @@
 /* eslint-disable quote-props */
 /* globals describe, before, after, it */
-const CompileError = require('../../../compiler/CompileError');
-const PrepareCompiler = require('../../unit/PrepareCompiler');
-const MainPrepareCompiler = require('../../../compiler/PrepareCompiler');
+import { CompileError } from '../../../src/compiler/CompileError';
+import { prepareCompiler } from '../../../src/compiler/PrepareCompiler';
+import { prepareCompiler as testPrepareCompiler } from '../../unit/PrepareCompiler';
+
 require('should');
 
-const { prepareCompiler } = PrepareCompiler;
 const dbRunner = require('./ClickHouseDbRunner');
 
 const { debugLog, logSqlAndParams } = require('../../unit/TestUtil');
@@ -22,7 +22,7 @@ describe('ClickHouse DataSchemaCompiler', function test() {
   });
 
   it('gutter', () => {
-    const { compiler } = prepareCompiler(`
+    const { compiler } = testPrepareCompiler(`
     cube('visitors', {
       sql: \`
       select * from visitors
@@ -57,7 +57,7 @@ describe('ClickHouse DataSchemaCompiler', function test() {
   });
 
   it('error', () => {
-    const { compiler } = prepareCompiler(`
+    const { compiler } = testPrepareCompiler(`
     cube({}, {
       measures: {}
     })
@@ -73,7 +73,7 @@ describe('ClickHouse DataSchemaCompiler', function test() {
   });
 
   it('duplicate member', () => {
-    const { compiler } = prepareCompiler(`
+    const { compiler } = testPrepareCompiler(`
     cube('visitors', {
       sql: \`
       select * from visitors
@@ -108,7 +108,7 @@ describe('ClickHouse DataSchemaCompiler', function test() {
   });
 
   it('calculated metrics', () => {
-    const { compiler, transformer, cubeEvaluator, joinGraph } = prepareCompiler(`
+    const { compiler, transformer, cubeEvaluator, joinGraph } = testPrepareCompiler(`
     cube('visitors', {
       sql: \`
       select * from visitors
@@ -182,7 +182,7 @@ describe('ClickHouse DataSchemaCompiler', function test() {
   });
 
   it('static dimension case', () => {
-    const { compiler, transformer, cubeEvaluator, joinGraph } = prepareCompiler(`
+    const { compiler, transformer, cubeEvaluator, joinGraph } = testPrepareCompiler(`
     cube('visitors', {
       sql: \`
       select * from visitors
@@ -242,7 +242,7 @@ describe('ClickHouse DataSchemaCompiler', function test() {
   });
 
   it('dynamic dimension case', () => {
-    const { compiler, transformer, cubeEvaluator, joinGraph } = prepareCompiler(`
+    const { compiler, transformer, cubeEvaluator, joinGraph } = testPrepareCompiler(`
     cube('visitors', {
       sql: \`
       select * from visitors
@@ -316,7 +316,7 @@ describe('ClickHouse DataSchemaCompiler', function test() {
   });
 
   {
-    const { compiler, cubeEvaluator, joinGraph } = prepareCompiler(`
+    const { compiler, cubeEvaluator, joinGraph } = testPrepareCompiler(`
       cube('visitors', {
         sql: \`
         select * from visitors
@@ -385,7 +385,7 @@ describe('ClickHouse DataSchemaCompiler', function test() {
   }
 
   it('export import', () => {
-    const { compiler, cubeEvaluator, joinGraph } = MainPrepareCompiler.prepareCompiler({
+    const { compiler, cubeEvaluator, joinGraph } = prepareCompiler({
       dataSchemaFiles: () => Promise.resolve([
         {
           fileName: 'main.js',
@@ -423,7 +423,7 @@ describe('ClickHouse DataSchemaCompiler', function test() {
   });
 
   it('contexts', () => {
-    const { compiler, contextEvaluator } = prepareCompiler(`
+    const { compiler, contextEvaluator } = testPrepareCompiler(`
       cube('Visitors', {
         sql: \`
         select * from visitors
@@ -456,7 +456,7 @@ describe('ClickHouse DataSchemaCompiler', function test() {
   });
 
   it('dashboard templates', () => {
-    const { compiler, contextEvaluator, dashboardTemplateEvaluator } = prepareCompiler(`
+    const { compiler, contextEvaluator, dashboardTemplateEvaluator } = testPrepareCompiler(`
       cube('Visitors', {
         sql: \`
         select * from visitors

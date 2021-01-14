@@ -1,13 +1,11 @@
 /* eslint-disable quote-props */
 /* globals describe, after, it */
-const UserError = require('../../../compiler/UserError');
-const PrepareCompiler = require('../../unit/PrepareCompiler');
+import { UserError } from '../../../compiler/UserError';
+import { prepareCompiler } from '../../unit/PrepareCompiler';
+import dbRunner from './ClickHouseDbRunner';
+import { debugLog, logSqlAndParams } from '../../unit/TestUtil';
+
 require('should');
-
-const { prepareCompiler } = PrepareCompiler;
-const dbRunner = require('./ClickHouseDbRunner');
-
-const { debugLog, logSqlAndParams } = require('../../unit/TestUtil');
 
 describe('ClickHouse JoinGraph', function test() {
   this.timeout(200000);

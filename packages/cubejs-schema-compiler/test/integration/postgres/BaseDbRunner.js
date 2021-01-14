@@ -1,4 +1,4 @@
-class BaseDbRunner {
+export class BaseDbRunner {
   testQuery(query, fixture) {
     return this.testQueries([query], fixture);
   }
@@ -38,5 +38,3 @@ class BaseDbRunner {
     throw new Error('Not implemented');
   }
 }
-
-module.exports = BaseDbRunner;

@@ -1,15 +1,16 @@
 /* globals it, describe, after */
 /* eslint-disable quote-props */
-const UserError = require('../../../compiler/UserError');
-const PostgresQuery = require('../../../adapter/PostgresQuery');
-const PrepareCompiler = require('../../unit/PrepareCompiler');
-require('should');
+import { UserError } from '../../../src/compiler/UserError';
+import { PostgresQuery } from '../../../src/adapter/PostgresQuery';
+import { prepareCompiler } from '../../unit/PrepareCompiler';
+import { PostgresDBRunner } from './PostgresDBRunner';
 
-const { prepareCompiler } = PrepareCompiler;
-const dbRunner = require('./PostgresDBRunner');
+require('should');
 
 describe('SQL Generation', function test() {
   this.timeout(90000);
+
+  const dbRunner = new PostgresDBRunner();
 
   after(async () => {
     await dbRunner.tearDown();

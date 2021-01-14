@@ -1,10 +1,10 @@
 /* eslint-disable */
-const ClickHouse = require('@apla/clickhouse');
-const { GenericContainer } = require('testcontainers');
-const sqlstring = require('sqlstring');
-const uuidv4 = require('uuid/v4');
+import ClickHouse from '@apla/clickhouse';
+import { GenericContainer } from 'testcontainers';
+import sqlstring from 'sqlstring';
+import uuidv4 from 'uuid/v4';
 
-const ClickHouseQuery = require('../../../adapter/ClickHouseQuery');
+import { ClickHouseQuery } from '../../../src/adapter/ClickHouseQuery';
 
 process.env.TZ = 'GMT';
 
